@@ -8,15 +8,15 @@ import { Close } from "@element-plus/icons-vue";
 import axios from "axios";
 
 let opacity = ref([0.8, 0.8, 0.8, 0.8]);
-let show1 = ref(false);
+let showCard = ref(false);
 let title = ref(null);
 let cover = ref(null);
 let introduction = ref(null);
 let boothCache = [];
 
-function close() {
+function closeCard() {
   opacity.value = [0.8, 0.8, 0.8, 0.8];
-  show1.value = false;
+  showCard.value = false;
 }
 
 //websocket
@@ -97,14 +97,14 @@ const updateMap = data => {
       title.value = item.name;
       introduction.value = item.card.info;
       cover.value = item.cover;
-      show1.value = true;
+      showCard.value = true;
       if (opacity.value[index] == 0.8) {
         opacity.value = [0.8, 0.8, 0.8, 0.8];
         console.log(opacity.value);
         opacity.value[index] = 1;
       } else {
         opacity.value = [0.8, 0.8, 0.8, 0.8];
-        show1.value = false;
+        showCard.value = false;
         console.log(opacity.value[index]);
       }
     });
@@ -159,16 +159,18 @@ onMounted(() => {
       enter-active-class="animate__animated animate__zoomIn"
       leave-active-class="animate__animated animate__zoomOut"
     >
-      <div class="carousel" v-show="show1">
-        <Introducation
-          :title="title"
-          :info="introduction"
-          :cover="cover"
-        ></Introducation>
-        <div class="button" @click="close">
-          <Close
-            style="width: 0.7em; height: 1.1em; margin: auto; color: #000"
-          />
+      <div class="carousel" v-show="showCard">
+        <div class="relative w-fit mx-auto">
+          <Introducation
+            :title="title"
+            :info="introduction"
+            :cover="cover"
+          ></Introducation>
+          <div class="button" @click="closeCard">
+            <Close
+              style="width: 0.7em; height: 1.1em; margin: auto; color: #000"
+            />
+          </div>
         </div>
       </div>
     </transition>
@@ -194,7 +196,7 @@ onMounted(() => {
   display: block;
   position: absolute;
   top: 8px;
-  right: 45px;
+  right: 8px;
   border-radius: 4rem;
   width: 18px;
   height: 18px;
@@ -274,7 +276,7 @@ img {
 .carousel {
   position: absolute;
   text-align: center;
-  z-index: 2;
+  z-index: 114514;
   bottom: 30px;
   width: 100%;
   height: 120px !important;

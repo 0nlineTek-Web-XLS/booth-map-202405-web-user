@@ -3,7 +3,7 @@
     <el-container>
       <el-aside width="150px" class="img">
         <!-- 换成props.cover -->
-        <img :src="imgUrl" alt="" @error="setDefaultImage" />
+        <img :src="props.cover" alt="" @error="setDefaultImage" />
       </el-aside>
       <div>
         <el-main>
@@ -73,6 +73,6 @@ const props = defineProps({
 });
 
 function setDefaultImage(event) {
-  event.target.scr = imgUrl;
+  event.target.src = imgUrl;
 }
 </script>
