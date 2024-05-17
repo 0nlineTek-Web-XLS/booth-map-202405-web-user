@@ -83,14 +83,7 @@ const updateMap = data => {
       className: "Booth booth" + index.toString(),
       iconSize: [60, 120],
     });
-    //测试数据
-    let position = [
-      [40.797852, -74.145546],
-      [40.792969, -74.087452],
-      [40.759766, -74.099651],
-      [40.831543, -74.113071],
-    ];
-    let booth = L.marker(position[index], {
+    let booth = L.marker([item.position.y, item.position.x], {
       icon: Booth,
     }).addTo(map.value);
     booth.on("click", () => {
@@ -139,14 +132,16 @@ onMounted(() => {
   // 图标修改定位时用，点击地图获取坐标
   let popup = L.popup();
 
-  function onMapClick(e) {
-    popup
-      .setLatLng(e.latlng)
-      .setContent("You clicked the map at " + e.latlng.toString())
-      .openOn(map.value);
-  }
+  if (import.meta.env.DEV) {
+    function onMapClick(e) {
+      popup
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(map.value);
+    }
 
-  map.value.on("click", onMapClick);
+    map.value.on("click", onMapClick);
+  }
   connectWebSocket();
 });
 </script>
