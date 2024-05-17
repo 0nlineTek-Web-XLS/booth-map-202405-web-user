@@ -5,6 +5,7 @@ import "element-plus/dist/index.css";
 import TDesign from "tdesign-mobile-vue";
 import "tdesign-mobile-vue/es/style/index.css";
 import "animate.css";
+import "uno.css";
 
 import ElementPlus from "element-plus";
 import { createApp } from "vue";
