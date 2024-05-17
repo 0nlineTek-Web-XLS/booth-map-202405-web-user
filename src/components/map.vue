@@ -12,6 +12,7 @@ let show1 = ref(false);
 let title = ref(null);
 let cover = ref(null);
 let introduction = ref(null);
+let boothCache = [];
 
 function close() {
   opacity.value = [0.8, 0.8, 0.8, 0.8];
@@ -64,7 +65,10 @@ function getItem() {
   });
 }
 const updateMap = data => {
-  data.forEach((item, index) => {
+  boothCache.forEach(booth => {
+    booth.removeFrom(map.value);
+  });
+  boothCache = data.map((item, index) => {
     let show = null;
     if (item.show == "count") {
       show = "<div><br><b>" + item.count.toString() + "人</b></div>";
@@ -104,6 +108,7 @@ const updateMap = data => {
         console.log(opacity.value[index]);
       }
     });
+    return booth;
   });
 };
 
