@@ -8,10 +8,10 @@ import { Close } from "@element-plus/icons-vue";
 import axios from "axios";
 
 let opacity = ref([0.8, 0.8, 0.8, 0.8]);
-var show1 = ref(false);
-var title = ref(null);
-var cover = ref(null);
-var introduction = ref(null);
+let show1 = ref(false);
+let title = ref(null);
+let cover = ref(null);
+let introduction = ref(null);
 
 function close() {
   opacity.value = [0.8, 0.8, 0.8, 0.8];
@@ -65,7 +65,7 @@ function getItem() {
 }
 const updateMap = data => {
   data.forEach((item, index) => {
-    var show = null;
+    let show = null;
     if (item.show == "count") {
       show = "<div><br><b>" + item.count.toString() + "人</b></div>";
     } else {
@@ -74,19 +74,19 @@ const updateMap = data => {
         item.minutes.toString() +
         "</b><p>分钟</p></div>";
     }
-    var Booth = L.divIcon({
+    let Booth = L.divIcon({
       html: show,
       className: "Booth booth" + index.toString(),
       iconSize: [60, 120],
     });
     //测试数据
-    var position = [
+    let position = [
       [40.797852, -74.145546],
       [40.792969, -74.087452],
       [40.759766, -74.099651],
       [40.831543, -74.113071],
     ];
-    var booth = L.marker(position[index], {
+    let booth = L.marker(position[index], {
       icon: Booth,
     }).addTo(map.value);
     booth.on("click", () => {
@@ -117,22 +117,22 @@ onMounted(() => {
   map.value.setMinZoom(11);
   map.value.setMaxZoom(14);
   //放图片
-  var imageBounds = [
+  let imageBounds = [
     [40.712216, -74.22655],
     [40.873941, -74.02544],
   ];
   L.imageOverlay(imageUrl, imageBounds).addTo(map.value);
 
   // 边界设定
-  var southWest = L.latLng(40.707601, -74.198167),
+  let southWest = L.latLng(40.707601, -74.198167),
     northEast = L.latLng(40.873372, -74.012934);
-  var bounds = L.latLngBounds(southWest, northEast);
+  let bounds = L.latLngBounds(southWest, northEast);
 
   // 将maxBounds添加到地图上
   map.value.setMaxBounds(bounds);
 
   // 图标修改定位时用，点击地图获取坐标
-  var popup = L.popup();
+  let popup = L.popup();
 
   function onMapClick(e) {
     popup
@@ -172,7 +172,7 @@ onMounted(() => {
 
 <style>
 #map {
-  height: 667px;
+  height: 100vh;
 }
 * {
   margin: 0px;
