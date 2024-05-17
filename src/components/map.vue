@@ -27,7 +27,7 @@ const maxReconnectAttempts = 10; // 最多尝试重连10次
 let reconnectAttempts = 0;
 
 const connectWebSocket = () => {
-  socket.value = new WebSocket("wss://api.booth-map-202405.0nline.tech/ws");
+  socket.value = new WebSocket(import.meta.env.VITE_WS_URL);
 
   socket.value.addEventListener("open", e => {
     console.log("WebSocket连接已打开");
@@ -58,7 +58,7 @@ const connectWebSocket = () => {
 function getItem() {
   axios({
     method: "get",
-    url: "https://api.booth-map-202405.0nline.tech/get_booths/",
+    url: `${import.meta.env.VITE_API_URL}/get_booths/`,
   }).then(res => {
     updateMap(res.data);
     console.log(res.data);
