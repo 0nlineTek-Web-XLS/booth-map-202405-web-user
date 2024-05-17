@@ -28,23 +28,23 @@ let reconnectAttempts = 0;
 const connectWebSocket = () => {
   socket.value = new WebSocket("wss://api.booth-map-202405.0nline.tech/ws");
 
-  socket.value.addEventListener("open", (e) => {
+  socket.value.addEventListener("open", e => {
     console.log("WebSocket连接已打开");
     reconnectAttempts = 0;
     console.log(e);
     getItem();
   });
 
-  socket.value.addEventListener("message", (event) => {
+  socket.value.addEventListener("message", event => {
     const data = JSON.parse(event.data);
     updateMap(data);
   });
 
-  socket.value.addEventListener("error", (error) => {
+  socket.value.addEventListener("error", error => {
     console.error("WebSocket错误:", error);
   });
 
-  socket.value.addEventListener("close", (event) => {
+  socket.value.addEventListener("close", event => {
     console.log("WebSocket连接已关闭:", event);
     if (reconnectAttempts < maxReconnectAttempts) {
       setTimeout(() => {
@@ -58,12 +58,12 @@ function getItem() {
   axios({
     method: "get",
     url: "https://api.booth-map-202405.0nline.tech/get_booths/",
-  }).then((res) => {
+  }).then(res => {
     updateMap(res.data);
     console.log(res.data);
   });
 }
-const updateMap = (data) => {
+const updateMap = data => {
   data.forEach((item, index) => {
     var show = null;
     if (item.show == "count") {
