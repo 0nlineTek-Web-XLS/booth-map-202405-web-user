@@ -14,6 +14,7 @@ let cover = ref(null);
 let introduction = ref(null);
 let boothCache = [];
 let extraZoomRef = ref(1);
+let firstLoading = ref(true);
 
 function closeCard() {
   opacity.value = [0.8, 0.8, 0.8, 0.8];
@@ -108,6 +109,7 @@ const updateMap = data => {
         console.log(opacity.value[index]);
       }
     });
+    firstLoading.value = false;
     return booth;
   });
 };
@@ -173,7 +175,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <div
+    v-loading.fullscreen.lock="firstLoading"
+    element-loading-text="获取地图信息中..."
+  >
     <!-- 地图 -->
     <div id="map" class="map" style="background-color: #fff5e3"></div>
     <transition
