@@ -13,6 +13,7 @@ let title = ref(null);
 let cover = ref(null);
 let introduction = ref(null);
 let boothCache = [];
+let extraZoomRef = ref(1);
 
 function closeCard() {
   opacity.value = [0.8, 0.8, 0.8, 0.8];
@@ -83,9 +84,15 @@ const updateMap = data => {
       className: "Booth booth" + index.toString(),
       iconSize: [60, 120],
     });
-    let booth = L.marker([item.position.y, item.position.x], {
-      icon: Booth,
-    }).addTo(map.value);
+    let booth = L.marker(
+      [
+        item.position.y * extraZoomRef.value,
+        item.position.x * extraZoomRef.value,
+      ],
+      {
+        icon: Booth,
+      },
+    ).addTo(map.value);
     booth.on("click", () => {
       title.value = item.name;
       introduction.value = item.card.info;
@@ -106,24 +113,43 @@ const updateMap = data => {
 };
 
 onMounted(() => {
+  let { width, height, extraZoom } = JSON.parse(
+    import.meta.env.VITE_MAP_IMG_DETAIL ??
+      JSON.stringify({
+        width: 100,
+        height: 100,
+        extraZoom: 1,
+      }),
+  );
+
+  extraZoomRef.value = extraZoom;
+
+  console.log({ width, height, extraZoom });
+
+  width *= extraZoom;
+  height *= extraZoom;
+
+  let center = L.latLng(width / 2, height / 2);
+
   map.value = L.map("map", {
     crs: L.CRS.Simple,
-    roomSpan: 0,
-    zoomDelta: 0,
+    // roomSpan: 0,
+    zoomDelta: 0.1,
+    zoomSnap: 0,
+    minZoom: 0,
+    maxZoom: 5,
     attributionControl: false,
-  }).setView([40.782471, -74.101358], 12);
-  map.value.setMinZoom(11);
-  map.value.setMaxZoom(14);
+  }).setView(center, 1);
   //放图片
   let imageBounds = [
-    [40.712216, -74.22655],
-    [40.873941, -74.02544],
+    [0, 0],
+    [height, width],
   ];
   L.imageOverlay(imageUrl, imageBounds).addTo(map.value);
 
   // 边界设定
-  let southWest = L.latLng(40.707601, -74.198167),
-    northEast = L.latLng(40.873372, -74.012934);
+  let southWest = L.latLng(0, 0),
+    northEast = L.latLng([height, width]);
   let bounds = L.latLngBounds(southWest, northEast);
 
   // 将maxBounds添加到地图上
