@@ -60,7 +60,7 @@ const connectWebSocket = () => {
 function getItem() {
   axios({
     method: "get",
-    url: `${import.meta.env.VITE_API_URL}/get_booths/`,
+    url: `${import.meta.env.VITE_API_URL}/get_booths`,
   }).then(res => {
     updateMap(res.data);
     console.log(res.data);
