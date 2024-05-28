@@ -1,3 +1,4 @@
-:root {
-  /* --animate-duration: 200ms; */
+.animate__zoomIn,
+animate__zoomOut {
+  --animate-duration: 200ms;
 }

@@ -1,13 +1,13 @@
 <template>
   <div
     :class="[
-      'shadow bg-white rounded-md w-80vw',
-      'flex flex-row gap-2 items-center',
+      'shadow bg-white rounded-md w-80vw max-w-720px',
+      'flex flex-row gap-2 pa-2',
       'overflow-hidden',
       'animate__bounceInRight',
     ]"
   >
-    <div class="basis-1/3">
+    <div class="basis-1/3 self-center">
       <!-- 换成props.cover -->
       <img class="" :src="props.cover" alt="" @error="setDefaultImage" />
     </div>
