@@ -2,11 +2,12 @@
 import { ref, onMounted } from "vue";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import imageUrl from "../img/Map.jpg";
+// import imageUrl from "../img/Map.jpg";
 import Introducation from "./introducation.vue";
 import { Close } from "@element-plus/icons-vue";
 import axios from "axios";
 
+const imageUrl = "https://s21.ax1x.com/2024/05/28/pk1he0S.jpg";
 let opacity = ref([0.8, 0.8, 0.8, 0.8]);
 let showCard = ref(false);
 let title = ref(null);
@@ -97,7 +98,7 @@ const updateMap = data => {
     booth.on("click", () => {
       title.value = item.name;
       introduction.value = item.card.info;
-      cover.value = item.cover;
+      cover.value = item.card.cover;
       showCard.value = true;
       if (opacity.value[index] == 0.8) {
         opacity.value = [0.8, 0.8, 0.8, 0.8];
@@ -131,7 +132,7 @@ onMounted(() => {
   width *= extraZoom;
   height *= extraZoom;
 
-  let center = L.latLng(width / 2, height / 2);
+  let center = L.latLng(width / 3, height / 3);
 
   map.value = L.map("map", {
     crs: L.CRS.Simple,
@@ -150,8 +151,8 @@ onMounted(() => {
   L.imageOverlay(imageUrl, imageBounds).addTo(map.value);
 
   // 边界设定
-  let southWest = L.latLng(0, 0),
-    northEast = L.latLng([height, width]);
+  let southWest = L.latLng(height * -0.5, width * -0.5),
+    northEast = L.latLng([height * 1.5, width * 1.5]);
   let bounds = L.latLngBounds(southWest, northEast);
 
   // 将maxBounds添加到地图上
@@ -229,18 +230,6 @@ onMounted(() => {
   background-color: rgb(190, 192, 194);
 }
 
-.img {
-  width: 120px;
-  height: 100%;
-  border-radius: 10px 0px 0px 10px;
-}
-
-img {
-  width: 120px;
-  height: 100%;
-  border-radius: 10px 0px 0px 10px;
-}
-
 .map {
   position: relative;
   z-index: 1;
@@ -301,10 +290,10 @@ img {
 
 .carousel {
   position: absolute;
-  text-align: center;
+  /* text-align: center; */
   z-index: 114514;
   bottom: 30px;
   width: 100%;
-  height: 120px !important;
+  /* height: 120px !important; */
 }
 </style>
